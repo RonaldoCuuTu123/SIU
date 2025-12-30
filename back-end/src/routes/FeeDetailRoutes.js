@@ -47,4 +47,24 @@ router.get('/stats/:collectionId', feeDetailController.getFeeDetailStats);
  */
 router.put('/update-vehicle-fee/:id', feeDetailController.updateVehicleFeedetail);
 
+
+/**
+ * @swagger
+ * /api/fee-detail/update-sanitation-fee/{id}:
+ *   put:
+ *     summary: Cập nhật phí vệ sinh tự động dựa trên số thành viên
+ *     tags: [FeeDetails]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID của đợt thu phí
+ *     responses:
+ *       200:
+ *         description: Cập nhật thành công
+ */
+router.put('/update-sanitation-fee/:id', feeDetailController.updateSanitationFeeDetail);
+
 export default router;

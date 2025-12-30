@@ -42,10 +42,10 @@ export const createFeeDetail = async (req, res) => {
   try {
     //console.log("CREATE FeeDetail req.body:", req.body);
     const { CollectionID, HouseholdID, Amount, PaymentDate, PaymentMethod, PaymentStatus } = req.body;
-    if (!CollectionID || !HouseholdID ) {
+    if (!CollectionID || !HouseholdID) {
       return res.status(400).json({ error: true, message: 'Missing required fields' });
     }
-    
+
     const newFeeDetail = await feeDetailServices.createFeeDetail({
       CollectionID, HouseholdID, Amount, PaymentDate, PaymentMethod, PaymentStatus
     });
@@ -95,7 +95,7 @@ export const updateVehicleFeedetail = async (req, res) => {
     const cid = req.params.id;
     // SQL thuần: cập nhật Amount = số xe * phí/xe cho các FeeDetail có CollectionID 
     await sequelize.query(
-    `
+      `
       UPDATE FeeDetails
       SET Amount = calculate_parking_fee_by_household( HouseholdID )
       WHERE CollectionID = :cid;
@@ -107,5 +107,34 @@ export const updateVehicleFeedetail = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: true, message: 'Lỗi khi cập nhật phí gửi xe', error });
+  }
+};
+export const updateSanitationFeeDetail = async (req, res) => {
+  try {
+    const cid = req.params.id;
+
+    // SQL thuần: cập nhật Amount = số thành viên * 6000 * 12 cho các FeeDetail có CollectionID
+    await sequelize.query(
+      `
+      UPDATE FeeDetails
+      SET Amount = calculate_sanitation_fee_by_household(HouseholdID)
+      WHERE CollectionID = :cid;
+      `,
+      {
+        replacements: { cid }
+      }
+    );
+
+    return res.status(200).json({
+      error: false,
+      message: 'Cập nhật thành công phí vệ sinh cho các hóa đơn.'
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: true,
+      message: 'Lỗi khi cập nhật phí vệ sinh',
+      detail: error.message
+    });
   }
 };

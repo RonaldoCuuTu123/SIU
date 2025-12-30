@@ -3,46 +3,74 @@ import sequelize from "../config/dbsetup.js";
 import Household from "./Household.js";
 
 const Resident = sequelize.define("Resident", {
-  ResidentID: { 
-    type: DataTypes.INTEGER, 
-    primaryKey: true, 
-    autoIncrement: true 
+  ResidentID: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   },
-  HouseholdID: { 
-    type: DataTypes.INTEGER, 
-    references: { model: Household, key: "HouseholdID" } 
+  HouseholdID: {
+    type: DataTypes.INTEGER,
+    references: { model: Household, key: "HouseholdID" }
   },
-  FullName: { 
-    type: DataTypes.STRING(100), 
-    allowNull: false 
+  FullName: {
+    type: DataTypes.STRING(100),
+    allowNull: false
   },
-  DateOfBirth: { 
-    type: DataTypes.DATEONLY 
+  Nickname: {
+    type: DataTypes.STRING(50)
   },
-  Sex: { 
-    type: DataTypes.ENUM('Nam', 'Nữ'), 
-    allowNull: false 
+  DateOfBirth: {
+    type: DataTypes.DATEONLY
   },
-  Relationship: { 
-    type: DataTypes.ENUM( 'Chủ hộ', 'Vợ', 'Chồng', 'Con', 'Cha', 'Mẹ', 'Anh', 'Chị', 'Em', 'Khác'), 
-    allowNull: false 
+  PlaceOfBirth: {
+    type: DataTypes.STRING(100)
   },
-  PhoneNumber: { 
-    type: DataTypes.STRING(20) 
+  Hometown: {
+    type: DataTypes.STRING(100)
   },
-  EducationLevel: { 
-    type: DataTypes.STRING(50) 
+  Ethnicity: {
+    type: DataTypes.STRING(50),
+    defaultValue: 'Kinh'
   },
-  Occupation: { 
-    type: DataTypes.STRING(100) 
+  Sex: {
+    type: DataTypes.ENUM('Nam', 'Nữ'),
+    allowNull: false
   },
-  ResidencyStatus: { 
-    type: DataTypes.ENUM('Thường trú', 'Tạm trú', 'Tạm vắng', 'Đã chuyển đi'), 
+  Relationship: {
+    type: DataTypes.ENUM('Chủ hộ', 'Vợ', 'Chồng', 'Con', 'Cha', 'Mẹ', 'Anh', 'Chị', 'Em', 'Khác'),
+    allowNull: false
+  },
+  PhoneNumber: {
+    type: DataTypes.STRING(20)
+  },
+  EducationLevel: {
+    type: DataTypes.STRING(50)
+  },
+  Occupation: {
+    type: DataTypes.STRING(100)
+  },
+  Workplace: {
+    type: DataTypes.STRING(200)
+  },
+  IDCardNumber: {
+    type: DataTypes.STRING(20)
+  },
+  IDCardIssueDate: {
+    type: DataTypes.DATEONLY
+  },
+  IDCardIssuePlace: {
+    type: DataTypes.STRING(100)
+  },
+  ResidencyStatus: {
+    type: DataTypes.ENUM('Thường trú', 'Tạm trú', 'Tạm vắng', 'Đã chuyển đi'),
     allowNull: false,
-    defaultValue: 'Tạm trú' 
+    defaultValue: 'Thường trú'
   },
-  RegistrationDate: { 
-    type: DataTypes.DATEONLY 
+  RegistrationDate: {
+    type: DataTypes.DATEONLY
+  },
+  PreviousAddress: {
+    type: DataTypes.TEXT
   }
 }, {
   tableName: "Residents",

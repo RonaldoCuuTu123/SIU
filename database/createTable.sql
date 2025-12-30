@@ -1,4 +1,6 @@
-use Quan_ly_thu_phi -- Bảng Users
+USE Quan_ly_thu_phi;
+
+-- Bảng Users
 CREATE TABLE Users (
     UserID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(50) NOT NULL UNIQUE,
